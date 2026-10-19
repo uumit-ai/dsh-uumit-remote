@@ -22,7 +22,13 @@
 dsh plugin --profile web add @uumit-ai/dsh-uumit-remote@beta
 ```
 
-装好后重启 `dsh web`。使用 npmmirror 等镜像源时，新版本可能要过几分钟才能同步到。
+装好后重启 `dsh web`。
+
+使用 npmmirror 等镜像源时，如果提示找不到这个版本，说明镜像还没同步到新版本，可以直连官方源安装：
+
+```bash
+dsh plugin --profile web add @uumit-ai/dsh-uumit-remote@beta --registry=https://registry.npmjs.org/
+```
 
 卸载：
 

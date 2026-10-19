@@ -24,7 +24,13 @@ The plugin runs inside the DSH process and connects to the UUMit tunnel directly
 dsh plugin --profile web add @uumit-ai/dsh-uumit-remote@beta
 ```
 
-Then restart `dsh web`. If you use a registry mirror such as npmmirror, a new version may take a few minutes to arrive.
+Then restart `dsh web`.
+
+If you use a registry mirror such as npmmirror and the install reports that no matching version was found, the mirror has not synced this release yet. Install straight from the official registry:
+
+```bash
+dsh plugin --profile web add @uumit-ai/dsh-uumit-remote@beta --registry=https://registry.npmjs.org/
+```
 
 To uninstall:
 
