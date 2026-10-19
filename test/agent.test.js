@@ -239,6 +239,8 @@ test('编排：浏览器确认 → 批准后保存凭证、登记应用、按档
     api.pollQueue.push({ status: 'pending', retry_after_seconds: 0 }, { status: 'approved', retry_after_seconds: 0, pairing: pairingResult() })
     const p = await agent.startPairing()
     assert.equal(p.confirm_code, 'AB12')
+    // 后端下发的确认页在官网域名上时，同样归一为网页应用域名
+    assert.equal(p.verification_url, 'https://m.uumit.com/address/connect?code=UC')
     assert.ok(!('device_code' in p), 'device_code never exposed')
     const c01 = api.calls[0][1]
     assert.equal(c01.runtime, 'dsh-plugin')
@@ -359,11 +361,13 @@ test('编排：重启后续上未过期的确认请求', async () => {
 test('网页入口：正式环境内地版是 m.uumit.com（不是官网 uumit.com），旧值会被映射', () => {
   assert.equal(productionWebBase('cn'), 'https://m.uumit.com')
   assert.equal(productionWebBase(undefined), 'https://m.uumit.com')
-  assert.equal(productionWebBase('global'), 'https://uumit.io')
+  assert.equal(productionWebBase('global'), 'https://m.uumit.ai')
   assert.equal(normalizeWebBase('https://uumit.com'), 'https://m.uumit.com')
   assert.equal(normalizeWebBase('https://www.uumit.com/'), 'https://m.uumit.com')
   assert.equal(normalizeWebBase('https://uumit.com/address/devices'), 'https://m.uumit.com/address/devices')
   assert.equal(normalizeWebBase('https://pre.uumit.com/'), 'https://pre.uumit.com')
   assert.equal(normalizeWebBase('https://m.uumit.com'), 'https://m.uumit.com')
+  assert.equal(normalizeWebBase('https://uumit.io'), 'https://m.uumit.ai')
+  assert.equal(normalizeWebBase('https://uumit.com/address/connect?code=ABCD'), 'https://m.uumit.com/address/connect?code=ABCD')
   assert.equal(normalizeWebBase(''), '')
 })

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0-beta.2
+
+- The overseas web app is `https://m.uumit.ai` (not `uumit.io`); `uumit.io` saved values are mapped to it.
+- URLs handed out by the platform (such as the pairing confirmation page) are normalised the same way, so a link on `uumit.com` opens `m.uumit.com` instead of the marketing site.
+
 ## 0.1.0-beta.1
 
 - Fix the Web3.0 links in the management panel: the production website for the mainland edition is `https://m.uumit.com`, not `https://uumit.com`. Saved values on `uumit.com` or `www.uumit.com` are mapped to `m.uumit.com` automatically.

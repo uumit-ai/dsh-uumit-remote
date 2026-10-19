@@ -10,13 +10,17 @@ export const DEFAULT_API_BASE = 'https://api.uumit.com'
 
 /**
  * 正式环境的 Web3.0 网页入口：内地版是 m.uumit.com（uumit.com 是官网，不是网页应用），
- * 海外版是 uumit.io。
+ * 海外版是 m.uumit.ai（uumit.ai 是官网）。
  */
 export function productionWebBase(edition) {
-  return edition === 'global' ? 'https://uumit.io' : 'https://m.uumit.com'
+  return edition === 'global' ? 'https://m.uumit.ai' : 'https://m.uumit.com'
 }
 
-/** 去掉末尾斜杠；旧版本存下的 uumit.com / www.uumit.com 映射到 m.uumit.com（保留路径）。 */
+/**
+ * 把 UUMit 网页网址归一到实际的应用域名并去掉末尾斜杠（路径与查询参数保留）。
+ * 官网域名映射到网页应用：uumit.com / www.uumit.com → m.uumit.com，uumit.io / www.uumit.io → m.uumit.ai。
+ * 后端下发的确认页地址、旧版本存下的网页入口都经过这里。
+ */
 export function normalizeWebBase(value) {
   const raw = String(value || '').trim()
   if (!raw) return ''
@@ -27,6 +31,7 @@ export function normalizeWebBase(value) {
     return raw.replace(/\/+$/, '')
   }
   if (u.hostname === 'uumit.com' || u.hostname === 'www.uumit.com') u.hostname = 'm.uumit.com'
+  else if (u.hostname === 'uumit.io' || u.hostname === 'www.uumit.io') u.hostname = 'm.uumit.ai'
   return u.toString().replace(/\/+$/, '')
 }
 const CONFIG_REFRESH_MS = 5 * 60 * 1000
@@ -216,7 +221,7 @@ export class RemoteAgent extends EventEmitter {
   publicPairing() {
     if (!this.pairing) return null
     const { user_code, confirm_code, verification_url, expires_at } = this.pairing
-    return { user_code, confirm_code, verification_url, expires_at }
+    return { user_code, confirm_code, verification_url: normalizeWebBase(verification_url), expires_at }
   }
 
   async _pollPairing(gen) {
@@ -538,7 +543,7 @@ export class RemoteAgent extends EventEmitter {
     if (settings.web_base) return normalizeWebBase(settings.web_base)
     const api = new URL(this.apiBase)
     if (api.hostname === '127.0.0.1' || api.hostname === 'localhost') return 'http://127.0.0.1:3010'
-    if (api.hostname !== 'api.uumit.com' && api.hostname !== 'api.uumit.io') return api.origin
+    if (!['api.uumit.com', 'api.uumit.io', 'api.uumit.ai'].includes(api.hostname)) return api.origin
     return productionWebBase(settings.edition || this.config?.edition)
   }
 
