@@ -7,7 +7,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { TunnelManager, classifyReason, nextDelay } from '../src/tunnel.js'
 import { FrpRejectError } from '../src/frp/client.js'
-import { RemoteAgent } from '../src/agent.js'
+import { RemoteAgent, productionWebBase, normalizeWebBase } from '../src/agent.js'
 import { APIError } from '../src/control/api.js'
 import { Store } from '../src/control/store.js'
 
@@ -254,7 +254,8 @@ test('编排：浏览器确认 → 批准后保存凭证、登记应用、按档
     assert.equal(last.d.fallbackPort, 443)
     const st = agent.status()
     assert.equal(st.service.entry_url, 'https://dsh--my-mac.uumit.cn/')
-    assert.equal(st.web_base, 'https://uumit.com')
+    // 确认页在官网域名上时，网页入口按正式网页 m.uumit.com 保存
+    assert.equal(st.web_base, 'https://m.uumit.com')
     assert.ok(!JSON.stringify(st).includes('dvc_secret') && !JSON.stringify(st).includes('tunnel-secret'))
     agent.stop()
   } finally {
@@ -353,4 +354,16 @@ test('编排：重启后续上未过期的确认请求', async () => {
     second.stop()
     first.cleanup()
   }
+})
+
+test('网页入口：正式环境内地版是 m.uumit.com（不是官网 uumit.com），旧值会被映射', () => {
+  assert.equal(productionWebBase('cn'), 'https://m.uumit.com')
+  assert.equal(productionWebBase(undefined), 'https://m.uumit.com')
+  assert.equal(productionWebBase('global'), 'https://uumit.io')
+  assert.equal(normalizeWebBase('https://uumit.com'), 'https://m.uumit.com')
+  assert.equal(normalizeWebBase('https://www.uumit.com/'), 'https://m.uumit.com')
+  assert.equal(normalizeWebBase('https://uumit.com/address/devices'), 'https://m.uumit.com/address/devices')
+  assert.equal(normalizeWebBase('https://pre.uumit.com/'), 'https://pre.uumit.com')
+  assert.equal(normalizeWebBase('https://m.uumit.com'), 'https://m.uumit.com')
+  assert.equal(normalizeWebBase(''), '')
 })

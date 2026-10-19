@@ -7,6 +7,28 @@ import { serviceEntry, validServiceName } from './control/entry.js'
 import { TunnelManager } from './tunnel.js'
 
 export const DEFAULT_API_BASE = 'https://api.uumit.com'
+
+/**
+ * 正式环境的 Web3.0 网页入口：内地版是 m.uumit.com（uumit.com 是官网，不是网页应用），
+ * 海外版是 uumit.io。
+ */
+export function productionWebBase(edition) {
+  return edition === 'global' ? 'https://uumit.io' : 'https://m.uumit.com'
+}
+
+/** 去掉末尾斜杠；旧版本存下的 uumit.com / www.uumit.com 映射到 m.uumit.com（保留路径）。 */
+export function normalizeWebBase(value) {
+  const raw = String(value || '').trim()
+  if (!raw) return ''
+  let u
+  try {
+    u = new URL(raw)
+  } catch {
+    return raw.replace(/\/+$/, '')
+  }
+  if (u.hostname === 'uumit.com' || u.hostname === 'www.uumit.com') u.hostname = 'm.uumit.com'
+  return u.toString().replace(/\/+$/, '')
+}
 const CONFIG_REFRESH_MS = 5 * 60 * 1000
 const MAX_POLL_INTERVAL_MS = 30_000
 const SERVICE_TITLE = 'DeepSeek Harness'
@@ -301,7 +323,7 @@ export class RemoteAgent extends EventEmitter {
     this.store.saveCredentials({ deviceId: String(result.device_id), deviceCredential: String(result.device_credential), tunnelToken: String(config.tunnel_token || '') })
     this.store.saveSettings({
       api_base: this.apiBase,
-      web_base: webBase,
+      web_base: normalizeWebBase(webBase),
       device_id: String(result.device_id),
       handle: String(result.handle),
       address: config.address || null,
@@ -510,14 +532,14 @@ export class RemoteAgent extends EventEmitter {
 
   /** 网页入口：环境变量 > 确认链接的来源 > 按平台入口推导（与 UUMit 连接器相同）。 */
   webBase() {
-    const fromEnv = (this.env.UUMIT_WEB_BASE || '').trim()
-    if (fromEnv) return fromEnv.replace(/\/+$/, '')
+    const fromEnv = normalizeWebBase((this.env.UUMIT_WEB_BASE || '').trim())
+    if (fromEnv) return fromEnv
     const settings = this.store.loadSettings()
-    if (settings.web_base) return settings.web_base
+    if (settings.web_base) return normalizeWebBase(settings.web_base)
     const api = new URL(this.apiBase)
     if (api.hostname === '127.0.0.1' || api.hostname === 'localhost') return 'http://127.0.0.1:3010'
     if (api.hostname !== 'api.uumit.com' && api.hostname !== 'api.uumit.io') return api.origin
-    return (settings.edition || this.config?.edition) === 'global' ? 'https://uumit.io' : 'https://uumit.com'
+    return productionWebBase(settings.edition || this.config?.edition)
   }
 
   // --- 管理页视图 ---
