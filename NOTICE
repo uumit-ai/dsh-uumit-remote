@@ -1,0 +1,16 @@
+@uumit-ai/dsh-uumit-remote
+Copyright 2026 UUMit
+
+This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+It contains an independent JavaScript implementation of a subset of the
+following protocols. No source code from these projects is included:
+
+- frp (https://github.com/fatedier/frp), Apache License 2.0:
+  the client side of the frp control protocol (message framing, login,
+  encrypted control channel, http proxies, work connections, heartbeats).
+- yamux (https://github.com/hashicorp/yamux), Mozilla Public License 2.0:
+  the stream multiplexing framing used by frp.
+
+DeepSeek Harness is a product of its respective owners; this plugin is not
+affiliated with or endorsed by them.

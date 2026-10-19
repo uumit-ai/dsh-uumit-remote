@@ -1,0 +1,4 @@
+body { margin: 0; background: #f3f5f9; color: #1f2328; font: 14px/1.6 system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+body[data-ds-dark-theme] { background: #0d1117; color: #e6edf3; }
+body[data-ds-dark-theme] .urm-standalone { background: #161b22; --urm-surface: #1b2129; --urm-fg: #e6edf3; --urm-muted: #9aa4b0; --urm-faint: #6e7781; }
+body[data-ds-dark-theme] .urm { --urm-surface: #1b2129; --urm-fg: #e6edf3; --urm-muted: #9aa4b0; --urm-faint: #6e7781; }

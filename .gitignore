@@ -1,0 +1,4 @@
+node_modules/
+*.tgz
+test/e2e/.tools/
+.DS_Store

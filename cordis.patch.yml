@@ -1,0 +1,15 @@
+# UUMit 远程访问（纯插件）：DSH 进程内连上 UUMit 通道，把 DSH 自己的网页开放给主人和被授权的人。
+# 本机管理页：<dsh web 地址>/uumit-remote/
+# 目录选择器固定为网页内浏览：远程访问者选目录时不在主人屏幕弹出原生对话框。
+# 条目 id 与 UUMit 客户端接管覆盖层相同，两者同时存在时按 id 合并为一份，不会重复加载。
+- id: directory-picker
+  disabled: true
+- insert:
+    - id: uumit-remote
+      name: '@uumit-ai/dsh-uumit-remote'
+      config:
+        autoConnect: true
+    - id: uumit-directory-picker-browse
+      name: '@deepseek-ai/dsh-host-directory-picker-browse'
+    - id: uumit-directory-picker-browse-ui
+      name: '@deepseek-ai/dsh-client-ui-directory-picker-browse'
