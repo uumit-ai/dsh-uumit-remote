@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0-beta.1
+
+- Fix the Web3.0 links in the management panel: the production website for the mainland edition is `https://m.uumit.com`, not `https://uumit.com`. Saved values on `uumit.com` or `www.uumit.com` are mapped to `m.uumit.com` automatically.
+
 ## 0.1.0-beta.0
 
 First public preview.

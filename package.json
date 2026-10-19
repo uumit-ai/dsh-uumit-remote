@@ -1,6 +1,6 @@
 {
   "name": "@uumit-ai/dsh-uumit-remote",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.1",
   "description": "DeepSeek Harness plugin: open your DSH from your phone or any computer through UUMit, with pairing, access control and invitations. No desktop client needed.",
   "keywords": [
     "deepseek-harness",
