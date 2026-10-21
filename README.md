@@ -6,6 +6,8 @@ A [DeepSeek Harness](https://www.npmjs.com/package/@deepseek-ai/dsh) (DSH) plugi
 
 After installing, click **Remote access** (远程访问) next to the settings button at the bottom of the DSH sidebar. A panel opens inside DSH where you connect to UUMit and choose who can use it. You, and the people you invite, then open the app URL (like `https://dsh--<your-computer>.<UUMit address domain>/`) and get the same DSH as on your computer: chats, terminal, files and settings all work, and settings are saved back to this computer.
 
+![The UUMit remote access panel inside DSH](assets/screenshot-1-panel.png)
+
 The plugin runs inside the DSH process and connects to the UUMit tunnel directly. It does not download or start any other program, and it does not open any port on your computer.
 
 > **Beta.** This is a preview release, published under the `beta` tag. Behaviour and configuration may change before 1.0.
