@@ -26,6 +26,8 @@ dsh plugin --profile web add @uumit-ai/dsh-uumit-remote@beta
 
 装好后重启 `dsh web`。
 
+DSH 用 pnpm 安装插件，pnpm 默认会跳过最近 24 小时内发布的版本。新版本发布后一天内，`@beta` 可能还会装到上一个版本；想马上用新版，可以写明版本号，例如 `@uumit-ai/dsh-uumit-remote@0.1.0-beta.3`。
+
 使用 npmmirror 等镜像源时，如果提示找不到这个版本，说明镜像还没同步到新版本，可以直连官方源安装：
 
 ```bash

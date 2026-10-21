@@ -28,6 +28,8 @@ dsh plugin --profile web add @uumit-ai/dsh-uumit-remote@beta
 
 Then restart `dsh web`.
 
+DSH installs plugins with pnpm, which by default skips releases published in the last 24 hours. Within a day of a new release, `@beta` can still give you the previous version; to get the new one right away, name the exact version, for example `@uumit-ai/dsh-uumit-remote@0.1.0-beta.3`.
+
 If you use a registry mirror such as npmmirror and the install reports that no matching version was found, the mirror has not synced this release yet. Install straight from the official registry:
 
 ```bash
