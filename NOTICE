@@ -1,7 +1,7 @@
 @uumit-ai/dsh-uumit-remote
 Copyright 2026 UUMit
 
-This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+This product is licensed under the MIT License (see LICENSE).
 
 It contains an independent JavaScript implementation of a subset of the
 following protocols. No source code from these projects is included:

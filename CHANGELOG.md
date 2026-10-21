@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.0-beta.3
+
+- License changed from Apache-2.0 to MIT.
+
 ## 0.1.0-beta.2
 
 - The overseas web app is `https://m.uumit.ai` (not `uumit.io`); `uumit.io` saved values are mapped to it.

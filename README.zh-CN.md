@@ -104,4 +104,4 @@ node test/e2e/qa-flow.mjs /tmp/dsh-qa-web.log /tmp/qa-stack.log
 
 ## 许可证
 
-[Apache-2.0](LICENSE)，另见 [NOTICE](NOTICE)。
+[MIT](LICENSE)，另见 [NOTICE](NOTICE)。

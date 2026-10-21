@@ -107,4 +107,4 @@ Layout: `client.js` browser half (sidebar entry, in-page panel), `src/frp/` frp 
 
 ## License
 
-[Apache-2.0](LICENSE). See [NOTICE](NOTICE).
+[MIT](LICENSE). See [NOTICE](NOTICE).
